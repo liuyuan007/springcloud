@@ -19,6 +19,7 @@
         <module>cloud-registry</module>
         <module>cloud-zuul</module>
         <module>cloud-item</module>
+        <module>cloud-common</module>
     </modules>
 
     <properties>
