@@ -15,8 +15,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>cloud-item-interface</module>
         <module>cloud-item-service</module>
+        <module>cloud-item-interface</module>
     </modules>
 
 
