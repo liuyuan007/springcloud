@@ -1,0 +1,33 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: cloud-upload
+  servlet:
+    multipart:
+      max-file-size: 5MB  # 限制文件上传大小
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10086/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 5      # 每隔5秒发送一次心跳
+    lease-expiration-duration-in-seconds: 10  # 10秒不发送就过期
+    ip-address: 127.0.0.1
+    prefer-ip-address: true
+ly:
+  upload:
+    allowTypes:
+      - image/jpeg
+      - image/png
+      - image/bmp
+    baseUrl: http://image.leyou.com/
+fdfs:
+  connect-timeout: 600
+  so-timeout: 2500
+  thumb-image:
+    height: 60
+    width: 60
+  tracker-list:
+    - 192.168.82.100:22122
+

@@ -14,6 +14,9 @@ public enum ExceptionEnum {
 
     PRICE_CANNOT_BE_NULL(400,"价格不能为空！"),
     BRAND_NOT_FOUND(404,"品牌没有找到！"),
+    BRAND_CREATE_FAILED(500,"品牌新增失败！"),
+    INVALID_FILE_FORMAT(500,"无效的文件格式！"),
+    UPLOAD_IMAGE_EXCEPTION(500,"上传文件失败！"),
     CATEGORY_NOT_FOUND(404,"类别没有找到！")
     ;
     private int code;

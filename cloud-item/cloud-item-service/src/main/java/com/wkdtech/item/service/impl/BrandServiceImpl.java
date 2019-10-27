@@ -11,6 +11,7 @@ import com.wkdtech.item.service.BrandService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
@@ -44,5 +45,22 @@ public class BrandServiceImpl implements BrandService{
         }
         PageInfo<Brand> pageInfo = new PageInfo<>(brandList);
         return new PageResult<>(pageInfo.getTotal(), brandList);
+    }
+
+    @Transactional
+    @Override
+    public void saveBrand(Brand brand, List<Long> cids) {
+        brand.setId(null);
+        int resultCount = brandMapper.insert(brand);
+        if (resultCount == 0) {
+            throw new BizException(ExceptionEnum.BRAND_CREATE_FAILED);
+        }
+        //更新品牌分类表
+        for (Long cid : cids) {
+            resultCount = brandMapper.saveCategoryBrand(cid, brand.getId());
+            if (resultCount == 0) {
+                throw new BizException(ExceptionEnum.BRAND_CREATE_FAILED);
+            }
+        }
     }
 }
