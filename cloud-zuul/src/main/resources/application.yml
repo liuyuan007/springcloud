@@ -16,17 +16,22 @@ zuul:
   prefix: /api
   retryable: true
   routes:
-    cloud-item-service: /item/**        # ½«ÉÌÆ·Î¢·þÎñÓ³Éäµ½/item/**
+    cloud-item-service: /item/**        # ï¿½ï¿½ï¿½ï¿½Æ·Î¢ï¿½ï¿½ï¿½ï¿½Ó³ï¿½äµ½/item/**
 ribbon:
-  ConnectTimeout: 250                   # Á¬½Ó³¬Ê±Ê±¼ä(ms)
-  ReadTimeout: 2000                     # Í¨ÐÅ³¬Ê±Ê±¼ä(ms)
-  OkToRetryOnAllOperations: true        # ÊÇ·ñ¶ÔËùÓÐ²Ù×÷ÖØÊÔ
-  MaxAutoRetriesNextServer: 1           # Í¬Ò»·þÎñ²»Í¬ÊµÀýµÄÖØÊÔ´ÎÊý
-  MaxAutoRetries: 1                     # Í¬Ò»ÊµÀýµÄÖØÊÔ´ÎÊý
+  ConnectTimeout: 250                   # ï¿½ï¿½ï¿½Ó³ï¿½Ê±Ê±ï¿½ï¿½(ms)
+  ReadTimeout: 2000                     # Í¨ï¿½Å³ï¿½Ê±Ê±ï¿½ï¿½(ms)
+  OkToRetryOnAllOperations: true        # ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  MaxAutoRetriesNextServer: 1           # Í¬Ò»ï¿½ï¿½ï¿½ï¿½Í¬Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½
+  MaxAutoRetries: 1                     # Í¬Ò»Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½
 hystrix:
   command:
     default:
       execution:
         isolation:
           thread:
-            timeoutInMillisecond: 10000 # ÈÛ¶Ï³¬Ê±Ê±³¤£º10000ms
+            timeoutInMillisecond: 10000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

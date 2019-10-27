@@ -51,5 +51,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.wkdtech.parent</groupId>
+            <artifactId>cloud-common</artifactId>
+            <version>${cloudlearn.latest.version}</version>
+        </dependency>
     </dependencies>
 </project>

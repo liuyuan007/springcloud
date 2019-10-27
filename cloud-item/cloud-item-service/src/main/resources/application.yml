@@ -4,7 +4,8 @@ spring:
   application:
     name: cloud-item-service
   datasource:
-    url: jdbc:mysql://localhost:3306/cloud
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springcloud?useUnicode=true&characterEncoding=utf-8
     username: root
     password: root
     hikari:
@@ -12,7 +13,8 @@ spring:
       minimum-idle: 10
 eureka:
   client:
-    service-url: http://127.0.0.1:10086/eureka
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
   instance:
     lease-renewal-interval-in-seconds: 5 # 每隔5秒发送一次心跳
     lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
