@@ -1,9 +1,13 @@
 package com.wkdtech.item.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.netflix.ribbon.proxy.annotation.Hystrix;
 import com.wkdtech.common.vo.PageResult;
 import com.wkdtech.item.entity.Brand;
 import com.wkdtech.item.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.hystrix.HystrixCommands;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +45,32 @@ public class BrandController {
     public ResponseEntity<Void> addBrand(Brand brand, @RequestParam("cids") List<Long> cids) {
         brandService.saveBrand(brand, cids);
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    /**
+     * 测试降级
+     */
+    @GetMapping("/testHystrix")
+    @HystrixCommand(
+            commandProperties = {
+                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
+                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "50"),
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000"),
+            }
+    )
+    public String testHystrix(@RequestParam("value") Integer value) {
+        if(value == 1) {
+            return "成功";
+        }
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "返回成功";
+    }
+
+    private String fallbackMethod(Integer value) {
+        return "服务拥挤，请稍后再试~~";
     }
 }

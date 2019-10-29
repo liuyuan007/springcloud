@@ -21,7 +21,7 @@ ly:
       - image/jpeg
       - image/png
       - image/bmp
-    baseUrl: http://image.leyou.com/
+    baseUrl: http://193.112.29.184:10000/
 fdfs:
   connect-timeout: 600
   so-timeout: 2500
@@ -29,5 +29,5 @@ fdfs:
     height: 60
     width: 60
   tracker-list:
-    - 192.168.82.100:22122
+    - 193.112.29.184:22122
 
