@@ -48,6 +48,17 @@ public class BrandController {
     }
 
     /**
+     * 根据分类ID查询品牌
+     *
+     * @param cid
+     * @return
+     */
+    @GetMapping("cid/{cid}")
+    public ResponseEntity<List<Brand>> queryBrandByCid(@PathVariable("cid") Long cid) {
+        return ResponseEntity.ok(brandService.queryBrandByCid(cid));
+    }
+
+    /**
      * 测试降级
      */
     @GetMapping("/testHystrix")

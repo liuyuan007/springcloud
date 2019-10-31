@@ -16,7 +16,10 @@ public enum ExceptionEnum {
     BRAND_NOT_FOUND(404,"品牌没有找到！"),
     BRAND_CREATE_FAILED(500,"品牌新增失败！"),
     INVALID_FILE_FORMAT(500,"无效的文件格式！"),
+    SPU_NOT_FOUND(404,"未找到的SPU！"),
+    SPEC_PARAM_NOT_FOUND(404,"SPEC_PARAM未找到！"),
     UPLOAD_IMAGE_EXCEPTION(500,"上传文件失败！"),
+    GOODS_SAVE_ERROR(500,"商品保存失败！"),
     CATEGORY_NOT_FOUND(404,"类别没有找到！")
     ;
     private int code;
