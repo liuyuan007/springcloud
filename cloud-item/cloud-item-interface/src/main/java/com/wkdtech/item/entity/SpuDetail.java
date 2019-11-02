@@ -21,11 +21,9 @@ public class SpuDetail {
     private String description;
 
     //通用规格参数数据
-    @Column(name = "specifications")
     private String genericSpec;
 
     //特殊规格参数数据
-    @Column(name = "spec_template")
     private String specialSpec;
 
     //包装清单

@@ -108,6 +108,73 @@ public class GoodsServiceImpl implements GoodsService{
 
     }
 
+    @Override
+    public SpuDetail querySpuDetailBySpuId(Long spuId) {
+        SpuDetail spuDetail = spuDetailMapper.selectByPrimaryKey(spuId);
+        if (spuDetail == null) {
+            throw new BizException(ExceptionEnum.SPU_NOT_FOUND);
+        }
+        return spuDetail;
+    }
+
+    @Override
+    public List<Sku> querySkuBySpuId(Long spuId) {
+        Sku sku = new Sku();
+        sku.setSpuId(spuId);
+        List<Sku> skuList = skuMapper.select(sku);
+        if (CollectionUtils.isEmpty(skuList)) {
+            throw new BizException(ExceptionEnum.SKU_NOT_FOUND);
+        }
+
+        //查询库存
+        for (Sku sku1 : skuList) {
+            sku1.setStock(stockMapper.selectByPrimaryKey(sku1.getId()).getStock());
+        }
+        return skuList;
+    }
+
+    @Transactional
+    @Override
+    public void updateGoods(Spu spu) {
+        if (spu.getId() == 0) {
+            throw new BizException(ExceptionEnum.INVALID_PARAM);
+        }
+        //首先查询sku
+        Sku sku = new Sku();
+        sku.setSpuId(spu.getId());
+        List<Sku> skuList = skuMapper.select(sku);
+        if (!CollectionUtils.isEmpty(skuList)) {
+            //删除所有sku
+            skuMapper.delete(sku);
+            //删除库存
+            List<Long> ids = skuList.stream()
+                    .map(Sku::getId)
+                    .collect(Collectors.toList());
+            stockMapper.deleteByIdList(ids);
+        }
+        //更新数据库  spu  spuDetail
+        spu.setLastUpdateTime(new Date());
+        //更新spu spuDetail
+        int count = spuMapper.updateByPrimaryKeySelective(spu);
+        if (count == 0) {
+            throw new BizException(ExceptionEnum.GOODS_UPDATE_ERROR);
+        }
+
+
+        SpuDetail spuDetail = spu.getSpuDetail();
+        spuDetail.setSpuId(spu.getId());
+        count = spuDetailMapper.updateByPrimaryKeySelective(spuDetail);
+        if (count == 0) {
+            throw new BizException(ExceptionEnum.GOODS_UPDATE_ERROR);
+        }
+
+        //更新sku和stock
+        saveSkuAndStock(spu);
+
+        //发送消息
+        //sendMessage(spu.getId(), "update");
+    }
+
     /**
      * 处理商品分类名和品牌名
      *
