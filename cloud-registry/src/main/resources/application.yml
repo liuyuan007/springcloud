@@ -10,5 +10,5 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:${server.port}/eureka
   server:
-    enable-self-preservation: false     # ¹Ø±Õ×ÔÎÒ±£»¤
-    eviction-interval-timer-in-ms: 5000 # Ã¿¸ô5Ãë½øÐÐÒ»´Î·þÎñÁÐ±íÇåÀí
+    enable-self-preservation: false     # ï¿½Ø±ï¿½ï¿½ï¿½ï¿½Ò±ï¿½ï¿½ï¿½
+    eviction-interval-timer-in-ms: 5000 # Ã¿ï¿½ï¿½5ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î·ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½

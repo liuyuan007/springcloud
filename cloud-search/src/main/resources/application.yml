@@ -1,0 +1,20 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: cloud-search
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      # 注意这里底层用TCP协议
+      cluster-nodes: 103.45.110.114:9300
+  jackson:
+      default-property-inclusion: non_null
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1

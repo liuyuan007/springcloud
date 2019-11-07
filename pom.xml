@@ -21,6 +21,7 @@
         <module>cloud-item</module>
         <module>cloud-common</module>
         <module>cloud-upload</module>
+        <module>cloud-search</module>
     </modules>
 
     <properties>

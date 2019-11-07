@@ -21,6 +21,21 @@ public class JsonUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JsonUtils.class);
 
+    public static String toString(Object obj) {
+        if (obj == null) {
+            return null;
+        }
+        if (obj.getClass() == String.class) {
+            return (String) obj;
+        }
+        try {
+            return mapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            logger.error("json序列化出错：" + obj, e);
+            return null;
+        }
+    }
+
     @Nullable
     public static String serialize(Object obj) {
         if (obj == null) {

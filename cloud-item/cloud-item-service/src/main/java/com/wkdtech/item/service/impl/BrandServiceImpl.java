@@ -72,4 +72,15 @@ public class BrandServiceImpl implements BrandService{
         }
         return brandList;
     }
+
+    @Override
+    public Brand queryBrandByBid(Long id) {
+        Brand brand = new Brand();
+        brand.setId(id);
+        Brand b1 = brandMapper.selectByPrimaryKey(brand);
+        if (b1 == null) {
+            throw new BizException(ExceptionEnum.BRAND_NOT_FOUND);
+        }
+        return b1;
+    }
 }

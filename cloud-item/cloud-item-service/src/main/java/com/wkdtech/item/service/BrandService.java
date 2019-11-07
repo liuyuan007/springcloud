@@ -15,4 +15,6 @@ public interface BrandService {
     void saveBrand(Brand brand, List<Long> cids);
 
     List<Brand> queryBrandByCid(Long cid);
+
+    Brand queryBrandByBid(Long id);
 }

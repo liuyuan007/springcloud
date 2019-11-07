@@ -11,6 +11,7 @@ import java.util.List;
  * @date 2018/9/15
  */
 @Data
+@NoArgsConstructor
 public class PageResult<T> {
 
     private Long total;
