@@ -17,13 +17,14 @@ zuul:
   retryable: true
   routes:
     cloud-item-service: /item/**        # ����Ʒ΢����ӳ�䵽/item/**
+    cloud-search: /search/**        # ����Ʒ΢����ӳ�䵽/item/**
     cloud-upload:                       # 文件上传服务
       path: /upload/**
       serviceId: cloud-upload
       strip-prefix: false
 ribbon:
-  ConnectTimeout: 250                   # ���ӳ�ʱʱ��(ms)
-  ReadTimeout: 2000                     # ͨ�ų�ʱʱ��(ms)
+  ConnectTimeout: 5000                   # ���ӳ�ʱʱ��(ms)
+  ReadTimeout: 10000                     # ͨ�ų�ʱʱ��(ms)
   OkToRetryOnAllOperations: true        # �Ƿ�����в�������
   MaxAutoRetriesNextServer: 1           # ͬһ����ͬʵ�������Դ���
   MaxAutoRetries: 1                     # ͬһʵ�������Դ���
