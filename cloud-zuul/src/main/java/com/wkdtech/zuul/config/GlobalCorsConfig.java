@@ -20,6 +20,7 @@ public class GlobalCorsConfig {
         config.addAllowedOrigin("http://193.112.29.184:10000");
         config.addAllowedOrigin("http://localhost:10011");
         config.addAllowedOrigin("http://localhost:9001");
+        config.addAllowedOrigin("http://193.112.29.184:9001");
         config.addAllowedOrigin("http://127.0.0.1:8080");
         //2) 是否发送Cookie信息
         config.setAllowCredentials(true);
