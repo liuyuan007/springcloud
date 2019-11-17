@@ -23,7 +23,7 @@ zuul:
       serviceId: cloud-upload
       strip-prefix: false
 ribbon:
-  ConnectTimeout: 5000                   # ���ӳ�ʱʱ��(ms)
+  ConnectTimeout: 10000                   # ���ӳ�ʱʱ��(ms)
   ReadTimeout: 10000                     # ͨ�ų�ʱʱ��(ms)
   OkToRetryOnAllOperations: true        # �Ƿ�����в�������
   MaxAutoRetriesNextServer: 1           # ͬһ����ͬʵ�������Դ���

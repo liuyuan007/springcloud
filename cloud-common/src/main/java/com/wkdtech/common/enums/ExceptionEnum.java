@@ -24,8 +24,8 @@ public enum ExceptionEnum {
     SKU_NOT_FOUND(404,"SKU未找到！"),
     UPLOAD_IMAGE_EXCEPTION(500,"上传文件失败！"),
     GOODS_SAVE_ERROR(500,"商品保存失败！"),
-    CATEGORY_NOT_FOUND(404,"类别没有找到！")
-    ;
+    CATEGORY_NOT_FOUND(404,"类别没有找到！"),
+    STOCK_NOT_ENOUGH(500,"库存不足");
     private int code;
     private String msg;
 }

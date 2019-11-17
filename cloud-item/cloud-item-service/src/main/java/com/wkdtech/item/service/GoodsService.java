@@ -1,6 +1,7 @@
 package com.wkdtech.item.service;
 
 import com.wkdtech.common.vo.PageResult;
+import com.wkdtech.item.dto.CartDto;
 import com.wkdtech.item.entity.Sku;
 import com.wkdtech.item.entity.Spu;
 import com.wkdtech.item.entity.SpuDetail;
@@ -21,4 +22,8 @@ public interface GoodsService {
     List<Sku> querySkuBySpuId(Long id);
 
     void updateGoods(Spu spu);
+
+    Spu querySpuBySpuId(Long spuId);
+
+    void decreaseStock(List<CartDto> cartDtos);
 }

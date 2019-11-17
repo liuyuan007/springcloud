@@ -1,6 +1,7 @@
 package com.wkdtech.item.controller;
 
 import com.wkdtech.common.vo.PageResult;
+import com.wkdtech.item.dto.CartDto;
 import com.wkdtech.item.entity.Sku;
 import com.wkdtech.item.entity.Spu;
 import com.wkdtech.item.entity.SpuDetail;
@@ -72,6 +73,27 @@ public class GoodsController {
     public ResponseEntity<List<Sku>> querySkuBySpuId(@RequestParam("id") Long id) {
         return ResponseEntity.ok(goodsService.querySkuBySpuId(id));
 
+    }
+
+    /**
+     * 根据spuId查询spu及skus
+     * @param spuId
+     * @return
+     */
+    @GetMapping("spu/{id}")
+    public ResponseEntity<Spu> querySpuBySpuId(@PathVariable("id") Long spuId) {
+        return ResponseEntity.ok(goodsService.querySpuBySpuId(spuId));
+    }
+
+    /**
+     * 减库存
+     * @param cartDtos
+     * @return
+     */
+    @PostMapping("stock/decrease")
+    public ResponseEntity<Void> decreaseStock(@RequestBody List<CartDto> cartDtos){
+        goodsService.decreaseStock(cartDtos);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

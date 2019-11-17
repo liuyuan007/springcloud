@@ -5,10 +5,13 @@ import com.github.pagehelper.PageInfo;
 import com.wkdtech.common.enums.ExceptionEnum;
 import com.wkdtech.common.exception.BizException;
 import com.wkdtech.common.vo.PageResult;
+import com.wkdtech.item.dto.CartDto;
 import com.wkdtech.item.entity.*;
 import com.wkdtech.item.mapper.*;
 import com.wkdtech.item.service.GoodsService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
  * Created by liuyuan on 2019/10/30.
  */
 @Service
+@Slf4j
 public class GoodsServiceImpl implements GoodsService{
 
     @Autowired
@@ -44,6 +48,9 @@ public class GoodsServiceImpl implements GoodsService{
 
     @Autowired
     private SkuMapper skuMapper;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     @Override
     public PageResult<Spu> querySpuByPage(Integer page, Integer rows, String key, Boolean saleable) {
@@ -104,7 +111,7 @@ public class GoodsServiceImpl implements GoodsService{
         saveSkuAndStock(spu);
 
         //发送消息
-        //sendMessage(spu.getId(), "insert");
+        sendMessage(spu.getId(), "insert");
 
     }
 
@@ -172,7 +179,7 @@ public class GoodsServiceImpl implements GoodsService{
         saveSkuAndStock(spu);
 
         //发送消息
-        //sendMessage(spu.getId(), "update");
+        sendMessage(spu.getId(), "update");
     }
 
     /**
@@ -223,6 +230,48 @@ public class GoodsServiceImpl implements GoodsService{
         int count = stockMapper.insertList(stocks);
         if (count == 0) {
             throw new BizException(ExceptionEnum.GOODS_SAVE_ERROR);
+        }
+    }
+
+    /**
+     * 封装发送到消息队列的方法
+     *
+     * @param id
+     * @param type
+     */
+    private void sendMessage(Long id, String type) {
+        try {
+            amqpTemplate.convertAndSend("item." + type, id);
+        } catch (Exception e) {
+            log.error("{}商品消息发送异常，商品ID：{}", type, id, e);
+        }
+    }
+
+    @Override
+    public Spu querySpuBySpuId(Long spuId) {
+        //根据spuId查询spu
+        Spu spu = spuMapper.selectByPrimaryKey(spuId);
+
+        //查询spuDetail
+        SpuDetail detail = querySpuDetailBySpuId(spuId);
+
+        //查询skus
+        List<Sku> skus = querySkuBySpuId(spuId);
+
+        spu.setSpuDetail(detail);
+        spu.setSkus(skus);
+        return spu;
+    }
+
+
+    @Transactional
+    @Override
+    public void decreaseStock(List<CartDto> cartDtos) {
+        for (CartDto cartDto : cartDtos) {
+            int count = stockMapper.decreaseStock(cartDto.getSkuId(), cartDto.getNum());
+            if (count != 1) {
+                throw new BizException(ExceptionEnum.STOCK_NOT_ENOUGH);
+            }
         }
     }
 }
