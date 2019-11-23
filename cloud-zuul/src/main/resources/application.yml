@@ -22,6 +22,10 @@ zuul:
       path: /upload/**
       serviceId: cloud-upload
       strip-prefix: false
+    cloud-user: /user/**
+    cloud-auth: /auth/**
+  add-host-header: true
+  sensitive-headers:
 ribbon:
   ConnectTimeout: 10000                   # ���ӳ�ʱʱ��(ms)
   ReadTimeout: 10000                     # ͨ�ų�ʱʱ��(ms)
@@ -40,3 +44,16 @@ management:
     web:
       exposure:
         include: "*"
+
+ly:
+  jwt:
+    secret: ly@Login(Auth}*^31)&yun6%f3q2 # 登录校验的密钥
+    pubKeyPath: C:\a\pub.key # 公钥地址
+    cookieName: LY_TOKEN
+  filter:
+      allowPaths:
+      - /api/auth
+      - /api/search
+      - /api/user/register
+      - /api/user/check
+      - /api/user/code

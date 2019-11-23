@@ -22,6 +22,8 @@
         <module>cloud-common</module>
         <module>cloud-upload</module>
         <module>cloud-search</module>
+        <module>cloud-user</module>
+        <module>cloud-auth</module>
     </modules>
 
     <properties>

@@ -25,7 +25,10 @@ public enum ExceptionEnum {
     UPLOAD_IMAGE_EXCEPTION(500,"上传文件失败！"),
     GOODS_SAVE_ERROR(500,"商品保存失败！"),
     CATEGORY_NOT_FOUND(404,"类别没有找到！"),
-    STOCK_NOT_ENOUGH(500,"库存不足");
+    STOCK_NOT_ENOUGH(500,"库存不足"),
+    USER_NOT_EXIST(500,"用户不存在"),
+    PASSWORD_NOT_MATCHING(500,"密码不正确"),
+    USERNAME_OR_PASSWORD_ERROR(500,"用户名或密码不正确");
     private int code;
     private String msg;
 }
